@@ -50,3 +50,7 @@ If time permits, we’d like to implement social features. This would mean the a
 * Incorporate a social element that allows users to see photos from their friends
 * Allow shared albums where users can collaborate and upload to the same album
 * Export to polaroid format
+
+### Prototype
+![Screen Shot 2023-05-26 at 11 41 46 PM](https://github.com/hesharon/BackStory/assets/79378020/36d5531d-72fe-486c-9442-39e7bbbb826d)
+![Screen Shot 2023-05-26 at 11 41 50 PM](https://github.com/hesharon/BackStory/assets/79378020/fe2b3aad-6f8e-49f4-87aa-4fdc73180940)
