@@ -4,7 +4,7 @@ function Tabs() {
   return (
     <div className={styles.grid}>
       <a
-        href="./gallery.html"
+        href="./gallery"
         className={styles.tab}
         target="_blank"
         rel="noopener noreferrer"
