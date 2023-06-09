@@ -13,7 +13,7 @@ function Tabs() {
       </a>
 
       <a
-        Link="./collections"
+        href="./collections"
         className={styles.tab}
         target="_blank"
         rel="noopener noreferrer"

@@ -1,15 +1,17 @@
 import Tabs from "./Home";
 import './Collections.css'
 
-function Collections() {
-  const squares = Array.from(Array(64).keys());
+function Collections(props) {
+
+  const squares = Array.from(Array(48).keys());
 
   return <><Tabs/>
   <div className="wrapper">
     <div className="grid">
       {squares.map((square) => (
         <div key={square} className="square">
-          <button>This button takes you to the collection</button>
+          <button><img src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR26ldn5r3EBGhRaUKnBKXM6T8yEhlbRI4xMQ&usqp=CAU'}>
+          </img></button>
         </div>
       ))}
     </div>
