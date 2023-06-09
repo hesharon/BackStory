@@ -1,25 +1,22 @@
 import styles from "./Tabs.module.css";
 
-function Tabs() {
+function Tabs({ setActiveTab }) {
+  console.log("yoyo")
   return (
     <div className={styles.grid}>
-      <a
-        href="./gallery"
+      <div
+        onClick={() => setActiveTab('gallery')}
         className={styles.tab}
-        target="_blank"
-        rel="noopener noreferrer"
       >
         <h2>Gallery</h2>
-      </a>
+      </div>
 
-      <a
-        href="./collections"
+      <div
+        onClick={() => setActiveTab('collections')}
         className={styles.tab}
-        target="_blank"
-        rel="noopener noreferrer"
       >
         <h2>Collections</h2>
-      </a>
+      </div>
     </div>
   );
 }

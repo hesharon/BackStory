@@ -15,6 +15,10 @@
     text-decoration: none;
     color: black;
   }
+
+  .tab h2 {
+    cursor: pointer;
+  }
   
   /* Underline hover effect taken from: https://www.w3resource.com/html-css-exercise/html-css-practical-exercises/html-css-practical-exercise-15.php */
   .tab > h2:after {
