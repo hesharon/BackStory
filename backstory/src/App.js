@@ -4,6 +4,8 @@ import Home from './Home';
 import Collections from './Collections';
 import "./App.css";
 
+import Home from "./Home";
+
 function App() {
   return (<Router>
     <Routes>
