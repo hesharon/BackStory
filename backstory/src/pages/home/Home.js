@@ -1,7 +1,6 @@
-import Tabs from "./Tabs";
-import Navbar from './components/navbar/Navbar';
-import Profile from './components/profile/Profile'
-import styles from "./Home.module.css";
+import Tabs from "../../components/tabs/Tabs";
+import Navbar from '../../components/navbar/Navbar';
+import Profile from '../../components/profile/Profile'
 
 function Home() {
   return (

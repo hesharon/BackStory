@@ -1,5 +1,5 @@
-import Tabs from "./Home";
-import './Collections.css'
+import Tabs from "../../components/tabs/Tabs";
+import './Collections.css';
 
 function Collections(props) {
 

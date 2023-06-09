@@ -1,4 +1,4 @@
-import styles from "./Home.module.css";
+import styles from "./Tabs.module.css";
 
 function Tabs() {
   return (

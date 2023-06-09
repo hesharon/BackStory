@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Tabs from "./Home";
+import Tabs from "../home/Home";
 import "./Gallery.css";
-import PolaroidImage from "./components/PolaroidImage/PolaroidImage";
+import PolaroidImage from "../../components/polaroidImage/PolaroidImage";
 
 function Gallery(props) {
   const squares = Array.from(Array(48).keys());
