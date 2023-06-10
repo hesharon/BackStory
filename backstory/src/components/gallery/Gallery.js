@@ -1,6 +1,8 @@
-import React, { useState } from "react";
 import "./Gallery.css";
-import PolaroidImage from "../../components/polaroidImage/PolaroidImage";
+
+import React, { useState } from "react";
+
+import PolaroidImage from "../polaroidImage/PolaroidImage";
 
 function Gallery() {
   const photos = [
