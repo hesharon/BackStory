@@ -1,0 +1,35 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 3%;
+}
+
+.nav__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease 0s;
+}
+
+.nav__title:hover {
+    color: #9a9b9c;
+}
+
+.nav__links {
+    list-style: none;
+}
+
+.nav__links li a {
+    transition: all 0.2s ease 0s;
+}
+
+.nav__links li a:hover {
+    color: #9a9b9c;
+}
+
+.nav__links li {
+    display: inline-block;
+    padding: 0px 1.5rem;
+    cursor: pointer
+}
