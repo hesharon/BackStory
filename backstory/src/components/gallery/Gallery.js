@@ -41,7 +41,7 @@ function Gallery({photos}) {
       </div>
       <Modal open={uploadModalOpen} onClose={handleSetUploadModalClose}>
         <div className="modal">
-          <Upload />
+          <Upload closeModal={handleSetUploadModalClose}/>
         </div>
       </Modal>
     </>
