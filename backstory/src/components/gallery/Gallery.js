@@ -1,9 +1,11 @@
 import "./Gallery.css";
+
 import React, { useState } from "react";
-import PolaroidImage from '../PolaroidImage/PolaroidImage';
+
 import AddCard from "../upload/AddCard";
-import Upload from "../upload/Upload";
 import Modal from "@mui/material/Modal";
+import PolaroidImage from '../polaroidImage/PolaroidImage';
+import Upload from "../upload/Upload";
 
 function Gallery({photos}) {
   const [flippedIndex, setFlippedIndex] = useState(null);
