@@ -3,10 +3,10 @@ import "./Gallery.css";
 import React, { useState } from "react";
 
 import AddCard from "../upload/AddCard";
-import Modal from "@mui/material/Modal";
-import PolaroidImage from '../PolaroidImage/PolaroidImage';
-import Upload from "../upload/Upload";
 import EditModal from "../upload/EditModal";
+import Modal from "@mui/material/Modal";
+import PolaroidImage from '../polaroidImage/PolaroidImage';
+import Upload from "../upload/Upload";
 import { deletePhoto } from "../../actions/photos";
 import { useDispatch } from 'react-redux'
 

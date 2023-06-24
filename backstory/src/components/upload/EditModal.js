@@ -6,7 +6,7 @@ import styles from "./Upload.module.css";
 import { useDispatch } from 'react-redux'
 import { useDropzone } from "react-dropzone";
 
-function Upload({imageSrc, closeModal}) {
+function EditModal({imageSrc, closeModal}) {
   const [files, setFiles] = useState([]);
   const [caption, setCaption] = useState("");
   const dispatch = useDispatch();
@@ -36,3 +36,5 @@ function Upload({imageSrc, closeModal}) {
     </div>
   );
 }
+
+export default EditModal
