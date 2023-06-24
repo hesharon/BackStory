@@ -1,6 +1,6 @@
-export const createCollection = (name, photos) => ({
+export const createCollection = collection => ({
     type: "CREATE_COLLECTION",
-    payload: {name, photos}
+    payload: collection
 })
 
 export const deleteCollection = collectionId => ({
@@ -8,7 +8,7 @@ export const deleteCollection = collectionId => ({
     payload: collectionId
 })
 
-export const addToCollection = photo => ({
+export const addToCollection = (photo , collectionId) => ({
     type: "ADD_TO_COLLECTION",
-    payload: photo
+    payload: {collectionId, photo}
 })

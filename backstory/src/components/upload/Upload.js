@@ -1,14 +1,26 @@
-import React, { useCallback, useState, useEffect } from "react";
-import { useDropzone } from "react-dropzone";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import styles from "./Upload.module.css";
+import React, { useCallback, useEffect, useState } from "react";
 
-function Upload() {
+import TextField from "@mui/material/TextField";
+import { addPhoto } from "../../actions/photos";
+import styles from "./Upload.module.css";
+import { useDispatch } from 'react-redux'
+import { useDropzone } from "react-dropzone";
+
+function Upload({closeModal}) {
+  const [files, setFiles] = useState([]);
+  const [caption, setCaption] = useState("");
+  const dispatch = useDispatch();
+
+  const handleButtonClick = () => {
+    {/* Will need to change hard-coded imageSrc when we have a blob storage and db setup to store the images*/}
+    dispatch(addPhoto({imageSrc: "https://cdn.wallpapersafari.com/50/4/wa7o0g.png", caption}));
+    closeModal()
+  }
+  
   return (
     <div className={styles.container}>
       <h2>Upload Photo</h2>
-      <Dropzone></Dropzone>
+      <Dropzone setFiles={setFiles} files={files}/>
       <TextField
         id="outlined-basic"
         label="Something to remind you about this moment"
@@ -17,18 +29,17 @@ function Upload() {
         rows={2}
         fullWidth
         style={{ marginTop: "20px" }}
+        onChange={(event) => setCaption(event.target.value)}
       />
       <div className={styles.buttonWrapper}>
-        <Button variant="outlined">Upload</Button>
+        <button variant="outlined" onClick={() => handleButtonClick()}>Upload</button>
       </div>
     </div>
   );
 }
 
 // Example code adapted from https://react-dropzone.js.org
-function Dropzone() {
-  const [files, setFiles] = useState([]);
-
+function Dropzone({setFiles, files}) {
   const onDrop = useCallback((acceptedFiles) => {
     setFiles(
       acceptedFiles.map((file) =>
