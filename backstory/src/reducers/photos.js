@@ -33,11 +33,23 @@ const initialState =
 ]
 
 export const photosReducer = (state = initialState, action) => {
+    let index = null;
     switch (action.type) {
         case "ADD_PHOTO":
             return [...state, action.payload]
         case "REMOVE_PHOTO":
-            return [...state.slice(0, parseInt(action.payload)), ...state.slice(parseInt(action.payload) + 1)]
+            index = state.findIndex(item => item.imageSrc === action.payload.imageURL);
+            return [...state.slice(0, index), ...state.slice(index + 1)]
+        case "EDIT_PHOTO":
+            return state.map(item => {
+                if (item.imageSrc === action.payload.imageSrc) {
+                  return {
+                    ...item,
+                    caption: action.payload.caption,
+                  };
+                }
+                return item;
+              });
         default:
             return state
     }

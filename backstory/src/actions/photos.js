@@ -4,6 +4,11 @@ export const addPhoto = photo => ({
 })
 
 export const deletePhoto = photoId => ({
-    type: "DELETE_PHOTO",
+    type: "REMOVE_PHOTO",
+    payload: photoId
+})
+
+export const editPhoto = photoId => ({
+    type: "EDIT_PHOTO",
     payload: photoId
 })
