@@ -1,0 +1,9 @@
+.container {
+  padding: 0 5%;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

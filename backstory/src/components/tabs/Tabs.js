@@ -1,7 +1,6 @@
 import styles from "./Tabs.module.css";
 
 function Tabs({ setActiveTab }) {
-  console.log("yoyo");
   return (
     <div className={styles.grid}>
       <div className={styles.tab}>
