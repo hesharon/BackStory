@@ -9,11 +9,11 @@ import { useDropzone } from "react-dropzone";
 function Upload({closeModal}) {
   const [files, setFiles] = useState([]);
   const [caption, setCaption] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleButtonClick = () => {
     {/* Will need to change hard-coded imageSrc when we have a blob storage and db setup to store the images*/}
-    dispatch(addPhoto({imageSrc: "https://cdn.wallpapersafari.com/50/4/wa7o0g.png", caption}))
+    dispatch(addPhoto({imageSrc: "https://cdn.wallpapersafari.com/50/4/wa7o0g.png", caption}));
     closeModal()
   }
   
