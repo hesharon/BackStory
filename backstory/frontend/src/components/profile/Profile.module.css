@@ -1,0 +1,15 @@
+.profile {
+    width: 100%;
+    text-align: center;
+}
+
+.profile > img {
+    height: 10rem;
+    border-radius: 50%;
+    margin-top: 50px;
+}
+
+.profile > div {
+    color: #868687;
+    margin: 1rem;
+}
