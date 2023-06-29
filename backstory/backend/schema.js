@@ -5,12 +5,13 @@ const { Schema } = mongoose;
 const photoSchema = new Schema({
   uid: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
-  photo: { type: String, required: true } // Assuming we store the photo as a string representation
+  filename: { type: String, required: true }, // Store the filename of the uploaded image
+  contentType: { type: String, required: true } // Store the content type of the image
 });
 
 // userSchema
 const userSchema = new Schema({
-  uid: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
   friends: [{ type: String }],
   collections: [{ type: Schema.Types.ObjectId, ref: 'Photo' }],
   photos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }]
@@ -18,6 +19,6 @@ const userSchema = new Schema({
 
 // Create models based on the schemas
 const Photo = mongoose.model('Photo', photoSchema);
-const UserObject = mongoose.model('MainObject', userSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports = { Photo, UserObject };
+module.exports = { Photo, User };
