@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const multer = require('multer');
 const Grid = require('gridfs-stream');
 const {
   GridFsStorage
@@ -8,8 +7,10 @@ const {
 const cors = require("cors");
 const crypto = require('crypto')
 const path = require("path")
-
+const multer = require('multer')
 const userRoutes = require('./routes/user')
+const photoRoutes = require('./routes/photos')
+const { User, Photo } = require("./schema")
 require("dotenv").config();
 
 const mongoURI = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.q1hfmt9.mongodb.net/?retryWrites=true&w=majority`
@@ -43,7 +44,8 @@ const storage = new GridFsStorage({
     });
   }
 });
-const upload = multer({ storage });
+
+const upload = multer({ storage })
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -59,11 +61,29 @@ app.use(express.json());
 
 // TODO: add routes
 app.use('/users', userRoutes)
+// app.use('/photos', photoRoutes)
 
+// Can't export upload correctly to make this work so just gonna leave this here for now.
 // @route POST /upload
 // @desc  Uploads file to DB
-app.post('/upload', upload.single('file'), (req, res) => {
-  res.json({ file: req.file });
+app.post('/photos/upload', upload.single('file'), (req, res) => {
+  const { username } = req.body
+  const id = req.file.id
+
+  User.findOneAndUpdate({ username: username }, { $push: { photos: id } }, { new: true }).then(updatedUser => {
+    if (!updatedUser) {
+      // User not found
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json(req.file);
+  })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ error: 'Internal server error' });
+    });
 });
+
+
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`)); // listens on this port
