@@ -72,10 +72,10 @@ app.use('/photos', photoRoutes)
 // @route POST /upload
 // @desc  Uploads file to DB
 app.post('/photos/upload', upload.single('file'), (req, res) => {
-  const { username } = req.body
+  const { username, caption } = req.body
   const id = req.file.id
 
-  User.findOneAndUpdate({ username: username }, { $push: { photos: id } }, { new: true }).then(updatedUser => {
+  User.findOneAndUpdate({ username: username }, { $push: { photos: { photoId: id, caption } } }, { new: true }).then(updatedUser => {
     if (!updatedUser) {
       // User not found
       return res.status(404).json({ error: 'User not found' });
@@ -92,10 +92,14 @@ app.post('/photos/upload', upload.single('file'), (req, res) => {
 // @route GET /image/:filename
 // @desc Display Image
 app.get('/image/:id', (req, res) => {
-  const objectId = new mongodb.ObjectId(req.params.id)
-  const readstream = gridfsBucket.openDownloadStream(objectId);
+  try {
+    const objectId = new mongodb.ObjectId(req.params.id)
+    const readstream = gridfsBucket.openDownloadStream(objectId);
 
-  readstream.pipe(res);
+    readstream.pipe(res);
+  } catch (error) {
+    console.error(error)
+  }
 });
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`)); // listens on this port
