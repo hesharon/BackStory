@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const mongodb = require("mongodb")
 const Grid = require('gridfs-stream');
 const {
   GridFsStorage
@@ -8,6 +9,7 @@ const cors = require("cors");
 const crypto = require('crypto')
 const path = require("path")
 const multer = require('multer')
+const methodOverride = require('method-override');
 const userRoutes = require('./routes/user')
 const photoRoutes = require('./routes/photos')
 const { User, Photo } = require("./schema")
@@ -17,13 +19,15 @@ const mongoURI = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONG
 const conn = mongoose.createConnection(mongoURI);
 mongoose.connect(mongoURI)
 
-let gfs;
-
+let gfs, gridfsBucket;
 conn.once('open', () => {
-  // Init stream
+  gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+    bucketName: 'uploads'
+  });
+
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection('uploads');
-});
+})
 
 // Create storage engine
 const storage = new GridFsStorage({
@@ -50,6 +54,7 @@ const upload = multer({ storage })
 const PORT = process.env.PORT || 8000;
 const app = express();
 
+app.use(methodOverride('_method'));
 // Allow CORS
 app.use(cors());
 
@@ -61,7 +66,7 @@ app.use(express.json());
 
 // TODO: add routes
 app.use('/users', userRoutes)
-// app.use('/photos', photoRoutes)
+app.use('/photos', photoRoutes)
 
 // Can't export upload correctly to make this work so just gonna leave this here for now.
 // @route POST /upload
@@ -84,6 +89,13 @@ app.post('/photos/upload', upload.single('file'), (req, res) => {
     });
 });
 
+// @route GET /image/:filename
+// @desc Display Image
+app.get('/image/:id', (req, res) => {
+  const objectId = new mongodb.ObjectId(req.params.id)
+  const readstream = gridfsBucket.openDownloadStream(objectId);
 
+  readstream.pipe(res);
+});
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`)); // listens on this port

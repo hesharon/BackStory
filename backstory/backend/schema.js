@@ -14,7 +14,7 @@ const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   friends: [{ type: String }],
   collections: [{ type: Schema.Types.ObjectId, ref: 'Photo' }],
-  photos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }]
+  photos: [{ type: String }]
 });
 
 // Create models based on the schemas
