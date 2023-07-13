@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import TextField from "@mui/material/TextField";
-import { addPhoto } from "../../actions/photos";
+import { fetchPhotoIds } from "../../slices/photos";
 import styles from "./Upload.module.css";
 import { useDispatch } from 'react-redux'
 import { useDropzone } from "react-dropzone";
@@ -12,8 +12,16 @@ function Upload({closeModal}) {
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
-    {/* Will need to change hard-coded imageSrc when we have a blob storage and db setup to store the images*/}
-    dispatch(addPhoto({imageSrc: "https://cdn.wallpapersafari.com/50/4/wa7o0g.png", caption}));
+    const formData = new FormData()
+    formData.append('file', files[0])
+    formData.append('caption', caption)
+    formData.append('username', 'toad')
+
+    fetch('/photos', {
+      method: 'POST',
+      body: formData
+    }).then(() => dispatch(fetchPhotoIds('toad')))
+    .catch(console.error)
     closeModal()
   }
   
