@@ -102,4 +102,25 @@ app.get('/image/:id', (req, res) => {
   }
 });
 
+app.delete('/:id', async (req, res) => {
+  const photoId = req.params.id;
+
+  try {
+    const user = await User.findById('649ded62e82047b1775942f9');
+
+    const photoIndex = user.photos.findIndex((photo) => photo._id.toString() === photoId);
+
+    if (photoIndex === -1) {
+      return res.status(404).send('Photo not found');
+    }
+    user.photos.splice(photoIndex, 1);
+    await user.save();
+
+    res.send('Photo deleted successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Failed to delete photo');
+  }
+});
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`)); // listens on this port
