@@ -28,15 +28,16 @@ function Gallery() {
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
   };
+  
   const handleDelete = () => {
     fetch(`/${user.email}`, { method: 'DELETE' })
     .then(() => dispatch(fetchPhotoIds(user.email)))
     .catch(console.error)
   };
+  
   const handleEdit = (imageURL) => {
     setEditSRC(imageURL);
     setEditModalOpen(true);
-    //dispatch(editPhoto({imageURL: imageURL, caption: caption}));
   };
   const handleSetUploadModalOpen = () => {
     setUploadModalOpen(true);
