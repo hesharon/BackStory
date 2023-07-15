@@ -72,10 +72,10 @@ app.use('/photos', photoRoutes)
 // @route POST /photos
 // @desc  Uploads file to DB
 app.post('/photos', upload.single('file'), (req, res) => {
-  const { username, caption } = req.body
+  const { email, caption } = req.body
   const id = req.file.id
 
-  User.findOneAndUpdate({ username: username }, { $push: { photos: { photoId: id, caption } } }, { new: true }).then(updatedUser => {
+  User.findOneAndUpdate({ email }, { $push: { photos: { photoId: id, caption } } }, { new: true }).then(updatedUser => {
     if (!updatedUser) {
       // User not found
       return res.status(404).json({ error: 'User not found' });
@@ -99,27 +99,6 @@ app.get('/image/:id', (req, res) => {
     readstream.pipe(res);
   } catch (error) {
     console.error(error)
-  }
-});
-
-app.delete('/:id', async (req, res) => {
-  const photoId = req.params.id;
-
-  try {
-    const user = await User.findById('649ded62e82047b1775942f9');
-
-    const photoIndex = user.photos.findIndex((photo) => photo._id.toString() === photoId);
-
-    if (photoIndex === -1) {
-      return res.status(404).send('Photo not found');
-    }
-    user.photos.splice(photoIndex, 1);
-    await user.save();
-
-    res.send('Photo deleted successfully');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Failed to delete photo');
   }
 });
 
