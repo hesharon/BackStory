@@ -1,6 +1,7 @@
 import "./Gallery.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 
 import AddCard from "../upload/AddCard";
 import EditModal from "../upload/EditModal";
@@ -8,8 +9,8 @@ import Modal from "@mui/material/Modal";
 import PolaroidImage from '../PolaroidImage/PolaroidImage'
 import Upload from "../upload/Upload";
 import { deletePhoto } from "../../actions/photos";
-import { useSelector, useDispatch } from 'react-redux'
 import { fetchPhotoIds } from '../../slices/photos.js'
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Gallery() {
   const [flippedIndex, setFlippedIndex] = useState(null);
@@ -17,9 +18,11 @@ function Gallery() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editSRC, setEditSRC] = useState("");
   const dispatch = useDispatch();
+  const { user, getIdTokenClaims } = useAuth0()
 
   useEffect(() => {
-    dispatch(fetchPhotoIds("toad"));
+    getIdTokenClaims().then(console.log)
+    dispatch(fetchPhotoIds(user.name))
   }, [dispatch]);
 
   const photoIds = useSelector((state) => state.user.photoIds);
