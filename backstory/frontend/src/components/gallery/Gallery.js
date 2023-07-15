@@ -1,14 +1,13 @@
 import "./Gallery.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 
 import AddCard from "../upload/AddCard";
 import EditModal from "../upload/EditModal";
 import Modal from "@mui/material/Modal";
 import PolaroidImage from '../PolaroidImage/PolaroidImage'
 import Upload from "../upload/Upload";
-import { deletePhoto } from "../../actions/photos";
-import { useSelector, useDispatch } from 'react-redux'
 import { fetchPhotoIds } from '../../slices/photos.js'
 import axios from 'axios'
 

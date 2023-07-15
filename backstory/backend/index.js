@@ -69,9 +69,9 @@ app.use('/users', userRoutes)
 app.use('/photos', photoRoutes)
 
 // Can't export upload correctly to make this work so just gonna leave this here for now.
-// @route POST /upload
+// @route POST /photos
 // @desc  Uploads file to DB
-app.post('/photos/upload', upload.single('file'), (req, res) => {
+app.post('/photos', upload.single('file'), (req, res) => {
   const { username, caption } = req.body
   const id = req.file.id
 
