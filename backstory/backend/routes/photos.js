@@ -6,7 +6,7 @@ router.get('/user/:email', (req, res) => {
   const { email } = req.params;
 
   // Find the user document
-  User.findOne({ email: email })
+  User.findOne({ email })
     .populate('photos') // Populate the 'photos' field with actual images
     .exec()
     .then(user => {

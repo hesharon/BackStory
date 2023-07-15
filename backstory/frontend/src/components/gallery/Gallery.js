@@ -17,7 +17,7 @@ function Gallery() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editSRC, setEditSRC] = useState("");
   const dispatch = useDispatch();
-  const { user, getIdTokenClaims } = useAuth0()
+  const { user } = useAuth0()
 
   useEffect(() => {
     dispatch(fetchPhotoIds(user.email))
@@ -28,9 +28,9 @@ function Gallery() {
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
   };
-  const handleDelete = (id) => {
-    fetch(`/${id}`, { method: 'DELETE' })
-    .then(() => dispatch(fetchPhotoIds('toad')))
+  const handleDelete = () => {
+    fetch(`/${user.email}`, { method: 'DELETE' })
+    .then(() => dispatch(fetchPhotoIds(user.email)))
     .catch(console.error)
   };
   const handleEdit = (imageURL) => {

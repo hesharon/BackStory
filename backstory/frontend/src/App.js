@@ -29,9 +29,3 @@ function App() {
   }
   
   export default App
-
-  // TODO:
-  // 1. Update mongodb schema to include email and bio
-  // 2. Change the fetchPhotoIds request param to search by email instead of username
-  // 3. Grab bio from mongo
-  // 4. On signup, create a document in mongodb users collection
