@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import PolaroidImage from '../PolaroidImage/PolaroidImage'
 import Upload from "../upload/Upload";
 import { fetchPhotoIds } from '../../slices/photos.js'
+import axios from 'axios'
 
 function Gallery() {
   const [flippedIndex, setFlippedIndex] = useState(null);
@@ -26,10 +27,9 @@ function Gallery() {
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
   };
-  const handleDelete = (id) => {
-    fetch(`/${id}`, { method: 'DELETE' })
-    .then(() => dispatch(fetchPhotoIds('toad')))
-    .catch(console.error)
+  const handleDelete = async (id) => {
+    console.log(id);
+    await axios.delete(`http://localhost:8000/` + id);
   };
   const handleEdit = (imageURL) => {
     setEditSRC(imageURL);
