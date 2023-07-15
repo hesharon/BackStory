@@ -10,6 +10,7 @@ import Upload from "../upload/Upload";
 import { deletePhoto } from "../../actions/photos";
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchPhotoIds } from '../../slices/photos.js'
+import axios from 'axios'
 
 function Gallery() {
   const [flippedIndex, setFlippedIndex] = useState(null);
@@ -23,14 +24,13 @@ function Gallery() {
   }, [dispatch]);
 
   const photoIds = useSelector((state) => state.user.photoIds);
-  const loading = useSelector((state) => state.user.loading);
-  const error = useSelector((state) => state.user.error);
 
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
   };
-  const handleDelete = (imageURL) => {
-    dispatch(deletePhoto({ imageURL: imageURL }));
+  const handleDelete = async (id) => {
+    console.log(id);
+    await axios.delete(`http://localhost:8000/` + id);
   };
   const handleEdit = (imageURL) => {
     setEditSRC(imageURL);
@@ -59,6 +59,7 @@ function Gallery() {
           </div>
           {photoIds?.map((photo, index) => (
             <PolaroidImage
+              id={photo._id}
               key={index}
               isFlipped={flippedIndex === index}
               onFlip={() => handleFlip(index)}
