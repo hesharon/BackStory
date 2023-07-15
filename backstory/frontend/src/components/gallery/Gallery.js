@@ -21,8 +21,7 @@ function Gallery() {
   const { user, getIdTokenClaims } = useAuth0()
 
   useEffect(() => {
-    getIdTokenClaims().then(console.log)
-    dispatch(fetchPhotoIds(user.name))
+    dispatch(fetchPhotoIds(user.email))
   }, [dispatch]);
 
   const photoIds = useSelector((state) => state.user.photoIds);

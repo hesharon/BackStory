@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../schema")
 
-router.get('/user/:username', (req, res) => {
-  const { username } = req.params;
+router.get('/user/:email', (req, res) => {
+  const { email } = req.params;
 
   // Find the user document
-  User.findOne({ username: username })
+  User.findOne({ email: email })
     .populate('photos') // Populate the 'photos' field with actual images
     .exec()
     .then(user => {
