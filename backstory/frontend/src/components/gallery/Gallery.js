@@ -8,7 +8,6 @@ import EditModal from "../upload/EditModal";
 import Modal from "@mui/material/Modal";
 import PolaroidImage from '../PolaroidImage/PolaroidImage'
 import Upload from "../upload/Upload";
-import { deletePhoto } from "../../actions/photos";
 import { fetchPhotoIds } from '../../slices/photos.js'
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -25,14 +24,14 @@ function Gallery() {
   }, [dispatch]);
 
   const photoIds = useSelector((state) => state.user.photoIds);
-  const loading = useSelector((state) => state.user.loading);
-  const error = useSelector((state) => state.user.error);
 
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
   };
-  const handleDelete = (imageURL) => {
-    dispatch(deletePhoto({ imageURL: imageURL }));
+  const handleDelete = (id) => {
+    fetch(`/${id}`, { method: 'DELETE' })
+    .then(() => dispatch(fetchPhotoIds('toad')))
+    .catch(console.error)
   };
   const handleEdit = (imageURL) => {
     setEditSRC(imageURL);
@@ -61,6 +60,7 @@ function Gallery() {
           </div>
           {photoIds?.map((photo, index) => (
             <PolaroidImage
+              id={photo._id}
               key={index}
               isFlipped={flippedIndex === index}
               onFlip={() => handleFlip(index)}
