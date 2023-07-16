@@ -2,7 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const multer = require('multer')
-const { storage } = require('../db/gridfs')
+const { storage } = require('../db/middleware')
 const { User } = require("../schema")
 
 const upload = multer({ storage })
