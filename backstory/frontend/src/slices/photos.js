@@ -5,7 +5,7 @@ import axios from 'axios'
 export const fetchPhotoIds = createAsyncThunk(
   'user/fetchPhotoIds',
   async email => {
-    const res = await axios(`/photos/user/${email}`)
+    const res = await axios(`users/${email}/photos`)
     const data = await res.data
     return data
   }

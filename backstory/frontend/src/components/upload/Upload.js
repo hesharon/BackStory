@@ -17,9 +17,8 @@ function Upload({closeModal}) {
     const formData = new FormData()
     formData.append('file', files[0])
     formData.append('caption', caption)
-    formData.append('email', user.email)
 
-    fetch('/photos', {
+    fetch(`/users/${user.email}/photos`, {
       method: 'POST',
       body: formData
     }).then(() => dispatch(fetchPhotoIds(user.email)))
