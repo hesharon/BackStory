@@ -9,7 +9,7 @@ import Modal from "@mui/material/Modal";
 import PolaroidImage from '../PolaroidImage/PolaroidImage'
 import Upload from "../upload/Upload";
 import { fetchPhotoIds } from '../../slices/photos.js'
-import axios from 'axios'
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Gallery() {
   const [flippedIndex, setFlippedIndex] = useState(null);
@@ -17,9 +17,10 @@ function Gallery() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editSRC, setEditSRC] = useState("");
   const dispatch = useDispatch();
+  const { user } = useAuth0()
 
   useEffect(() => {
-    dispatch(fetchPhotoIds("toad"));
+    dispatch(fetchPhotoIds(user.email))
   }, [dispatch]);
 
   const photoIds = useSelector((state) => state.user.photoIds);
@@ -27,14 +28,16 @@ function Gallery() {
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
   };
-  const handleDelete = async (id) => {
-    console.log(id);
-    await axios.delete(`http://localhost:8000/` + id);
+  
+  const handleDelete = () => {
+    fetch(`/${user.email}`, { method: 'DELETE' })
+    .then(() => dispatch(fetchPhotoIds(user.email)))
+    .catch(console.error)
   };
+  
   const handleEdit = (imageURL) => {
     setEditSRC(imageURL);
     setEditModalOpen(true);
-    //dispatch(editPhoto({imageURL: imageURL, caption: caption}));
   };
   const handleSetUploadModalOpen = () => {
     setUploadModalOpen(true);

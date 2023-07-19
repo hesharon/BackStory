@@ -72,10 +72,10 @@ app.use('/photos', photoRoutes)
 // @route POST /photos
 // @desc  Uploads file to DB
 app.post('/photos', upload.single('file'), (req, res) => {
-  const { username, caption } = req.body
+  const { email, caption } = req.body
   const id = req.file.id
 
-  User.findOneAndUpdate({ username: username }, { $push: { photos: { photoId: id, caption } } }, { new: true }).then(updatedUser => {
+  User.findOneAndUpdate({ email }, { $push: { photos: { photoId: id, caption } } }, { new: true }).then(updatedUser => {
     if (!updatedUser) {
       // User not found
       return res.status(404).json({ error: 'User not found' });

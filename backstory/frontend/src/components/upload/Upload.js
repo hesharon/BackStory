@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { fetchPhotoIds } from "../../slices/photos";
 import styles from "./Upload.module.css";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from 'react-redux'
 import { useDropzone } from "react-dropzone";
 
@@ -10,17 +11,18 @@ function Upload({closeModal}) {
   const [files, setFiles] = useState([]);
   const [caption, setCaption] = useState("");
   const dispatch = useDispatch();
+  const { user } = useAuth0()
 
   const handleButtonClick = () => {
     const formData = new FormData()
     formData.append('file', files[0])
     formData.append('caption', caption)
-    formData.append('username', 'toad')
+    formData.append('email', user.email)
 
     fetch('/photos', {
       method: 'POST',
       body: formData
-    }).then(() => dispatch(fetchPhotoIds('toad')))
+    }).then(() => dispatch(fetchPhotoIds(user.email)))
     .catch(console.error)
     closeModal()
   }

@@ -3,14 +3,16 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../schema");
 
-// POST /users/createUser - Initialize a user in the database
-router.post('/createUser', async (req, res) => {
+// POST /users - Initialize a user in the database
+router.post('/', async (req, res) => {
   try {
     // Extract the user data from the request body
     const { username } = req.body;
     // Create a new user document based on the user schema
     const user = new User({
       username,
+      email,
+      bio: "",
       friends: [],
       collections: [],
       photos: []
