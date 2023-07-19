@@ -27,18 +27,19 @@ function Gallery() {
 
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
-  };
+  }
+  
   const handleDelete = photoId => {
     fetch(`/users/${user.email}/photos/${photoId}`, { method: 'DELETE' })
     .then(() => dispatch(fetchPhotoIds(user.email)))
     .catch(console.error)
   }
 
-  const handleEdit = (imageURL) => {
+  const handleEdit = imageURL => {
     setEditSRC(imageURL);
     setEditModalOpen(true);
   }
-
+  
   const handleSetUploadModalOpen = () => {
     setUploadModalOpen(true)
   }
