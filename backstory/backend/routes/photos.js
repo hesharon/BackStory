@@ -1,32 +1,31 @@
-const express = require('express');
-const router = express.Router();
-const { User } = require("../schema")
+const express = require('express')
+const router = express.Router()
+const mongodb = require("mongodb")
+const mongoose = require("mongoose")
+const { conn } = require('../db/connection')
+const Grid = require('gridfs-stream')
 
-router.get('/user/:username', (req, res) => {
-  const { username } = req.params;
+let gfs, gridfsBucket
+conn.once('open', () => {
+  gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+    bucketName: 'uploads'
+  })
 
-  // Find the user document
-  User.findOne({ username: username })
-    .populate('photos') // Populate the 'photos' field with actual images
-    .exec()
-    .then(user => {
-      if (!user) {
-        // User not found
-        return res.status(404).json({ error: 'User not found' });
-      }
+  gfs = Grid(conn.db, mongoose.mongo)
+  gfs.collection('uploads')
+})
 
-      // Retrieve the images from the user's 'photos' field
-      const images = user.photos;
-      console.log(user, user.photos)
+// @route GET /photos/:id/image
+// @desc Get image uri of photo with :id
+router.get('/:id/image', (req, res) => {
+  try {
+    const objectId = new mongodb.ObjectId(req.params.id)
+    const readstream = gridfsBucket.openDownloadStream(objectId)
 
-      res.json(images);
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({ error: 'Internal server error' });
-    });
-});
+    readstream.pipe(res)
+  } catch (error) {
+    console.error(error)
+  }
+})
 
-
-
-module.exports = router;
+module.exports = router
