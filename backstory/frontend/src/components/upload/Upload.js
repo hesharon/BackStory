@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import TextField from "@mui/material/TextField";
-import { fetchPhotoIds } from "../../slices/photos";
+import { fetchUser } from "../../slices/user";
 import styles from "./Upload.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from 'react-redux'
@@ -21,7 +21,7 @@ function Upload({closeModal}) {
     fetch(`/users/${user.email}/photos`, {
       method: 'POST',
       body: formData
-    }).then(() => dispatch(fetchPhotoIds(user.email)))
+    }).then(() => dispatch(fetchUser(user.email)))
     .catch(console.error)
     closeModal()
   }

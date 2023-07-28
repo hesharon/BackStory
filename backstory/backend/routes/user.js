@@ -29,9 +29,23 @@ router.post('/', async (req, res) => {
     return res.status(201).json({ message: 'User initialized successfully' });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Failed to initialize user' });
+    return res.status(500).json({ error: `Error iniitalizing user: ${error}` });
   }
 })
+
+// @route /users/:email
+// @desc Get user with :email
+router.get('/:email', (req, res) => {
+  const { email } = req.params
+
+  User.findOne({ email })
+    .then(user => user ? res.json(user) : res.status(404).json({ error: 'User not found' }))
+    .catch(error => {
+      console.error(error)
+      res.status(500).json({ error: `Error getting user: ${error}` })
+    })
+  }
+)
 
 // @route /users/:email/photos
 // @desc Get all photos of user that matches email
@@ -42,20 +56,10 @@ router.get('/:email/photos', (req, res) => {
   User.findOne({ email })
     .populate('photos') // Populate the 'photos' field with actual images
     .exec()
-    .then(user => {
-      if (!user) {
-        // User not found
-        return res.status(404).json({ error: 'User not found' })
-      }
-
-      // Retrieve the images from the user's 'photos' field
-      const images = user.photos
-
-      res.json(images)
-    })
+    .then(user => user ? res.json(user.photos) : res.status(404).json({ error: 'User not found' }))
     .catch(error => {
       console.error(error)
-      res.status(500).json({ error: 'Internal server error' })
+      res.status(500).json({ error: `Error getting photos: ${error}` })
     })
 })
 
@@ -79,7 +83,7 @@ router.delete('/:email/photos/:id', async (req, res) => {
     res.send('Photo deleted successfully')
   } catch (err) {
     console.error(err)
-    res.status(500).send('Failed to delete photo')
+    res.status(500).json({ error: `Error deleting photo: ${error}` })
   }
 })
 
@@ -95,10 +99,35 @@ router.post('/:email/photos', upload.single('file'), async (req, res) => {
     if (!updatedUser) {
       return res.status(404).json({ error: 'User not found' })
     }
-    res.json(req.file)
+    res.json(updatedUser.photos)
   } catch (err) {
       console.error(error)
-      res.status(500).json({ error: 'Internal server error' })
+      res.status(500).json({ error: `Error uploading photo: ${error}` })
+  }
+})
+
+// @route /users/:email/photos/:photoId
+// @desc Update user's photo's caption
+router.put('/:email/photos/:photoId', async (req, res) => {
+  const { caption } = req.body
+  const { email, photoId } = req.params
+
+  try {
+    const user = await User.findOne({ email })
+    if (!user) {
+      throw new Error('User not found')
+    }
+    const photoToUpdate = user.photos.find((photo) => photo._id.toString() === photoId)
+    if (!photoToUpdate) {
+      throw new Error('Photo not found');
+    }
+
+    photoToUpdate.caption = caption
+    const newUser = await user.save()
+    res.json(newUser)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: `Error updating photo caption: ${error}` })
   }
 })
 
