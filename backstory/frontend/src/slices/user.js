@@ -1,53 +1,64 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import axios from 'axios'
+import axios from 'axios';
 
-export const fetchUser = createAsyncThunk(
-  'user/fetchUser',
-  async email => {
-    const res = await axios(`users/${email}`)
-    const data = await res.data
-    return data
-  }
-)
+const BACKEND_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://backstory-backend.onrender.com'
+    : 'http://localhost:8000';
+
+export const fetchUser = createAsyncThunk('user/fetchUser', async (email) => {
+  const res = await axios(`${BACKEND_URL}/users/${email}`);
+  const data = await res.data;
+  return data;
+});
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    _id: "",
-    username: "",
+    _id: '',
+    username: '',
     friends: [],
     collections: [],
     photos: [],
-    email: "",
-    bio: "",
-    profileImg: "",
+    email: '',
+    bio: '',
+    profileImg: '',
     loading: false,
-    error: null
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        const { _id, username, friends, collections, photos, email, bio, profileImg } = action.payload
-        state.loading = false
-        state._id = _id
-        state.username = username
-        state.friends = friends
-        state.collections = collections
-        state.photos = photos
-        state.email = email
-        state.bio = bio
-        state.profileImg = profileImg
+        const {
+          _id,
+          username,
+          friends,
+          collections,
+          photos,
+          email,
+          bio,
+          profileImg,
+        } = action.payload;
+        state.loading = false;
+        state._id = _id;
+        state.username = username;
+        state.friends = friends;
+        state.collections = collections;
+        state.photos = photos;
+        state.email = email;
+        state.bio = bio;
+        state.profileImg = profileImg;
       })
       .addCase(fetchUser.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message
+        state.loading = false;
+        state.error = action.error.message;
       });
-  }
+  },
 });
 
-export default userSlice.reducer
+export default userSlice.reducer;

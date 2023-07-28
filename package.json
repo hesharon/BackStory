@@ -1,0 +1,16 @@
+{
+  "name": "backstory",
+  "version": "1.0.0",
+  "description": "Create a `.env` file at the root of /backstory (where `.example.env `is located).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-server": "cd backstory/backend && npm install",
+    "start-server": "cd backstory/backend && node index.js",
+    "install-client": "cd backstory/frontend && npm install",
+    "build-client": "cd backstory/frontend && npm run build",
+    "start-client": "cd backstory/frontend && npm run start"
+  },
+  "author": "",
+  "license": "ISC"
+}
