@@ -1,20 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 
 import TextField from "@mui/material/TextField";
-import { editPhoto } from "../../actions/photos";
+import { fetchUser } from "../../slices/user";
 import styles from "./Upload.module.css";
-import { useDispatch } from 'react-redux'
-import { useDropzone } from "react-dropzone";
 
-function EditModal({imageSrc, closeModal}) {
-  const [files, setFiles] = useState([]);
-  const [caption, setCaption] = useState("");
+function EditModal({photoId, closeModal}) {
+  const [caption, setCaption] = useState("")
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
-    {/* Will need to change hard-coded imageSrc when we have a blob storage and db setup to store the images*/}
-    dispatch(editPhoto({imageSrc: imageSrc, caption: caption}));
-    closeModal()
+    fetch(`users/${user.email}/photos/${photoId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ caption })
+    }).then(() => dispatch(fetchUser(user.email)))
+    .then(() => closeModal())
+    .catch(console.error)
   }
   
   return (
