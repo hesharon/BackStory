@@ -2,24 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import axios from 'axios'
 
-export const fetchPhotoIds = createAsyncThunk(
-  'user/fetchPhotoIds',
-  async email => {
-    const res = await axios(`users/${email}/photos`)
-    const data = await res.data
-    return data
-  }
-)
-
-export const addPhoto = createAsyncThunk(
-  'user/addPhoto',
-  async (photoDetails) => {
-    const res = await axios.post('/photos', photoDetails)
-    const data = await res.data
-    return data
-  }
-)
-
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
   async email => {
