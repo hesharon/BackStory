@@ -1,11 +1,15 @@
 import styles from './Profile.module.css'
+import { useSelector } from 'react-redux'
 
-const Profile = ({profileImg, name, bio}) => 
-    <div className={styles.profile}>
+const Profile = () => {
+    const { username, bio, profileImg } = useSelector(state => state.user)
+
+    return (<div className={styles.profile}>
         <img src={profileImg} alt="Profile"/>
-        <h3>{name}</h3>
+        <h3>{username}</h3>
         <div>{bio}</div>
         <button>Follow</button>
-    </div>
+    </div>)
+}
 
 export default Profile

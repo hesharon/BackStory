@@ -8,22 +8,22 @@ import EditModal from "../upload/EditModal"
 import Modal from "@mui/material/Modal"
 import PolaroidImage from '../PolaroidImage/PolaroidImage'
 import Upload from "../upload/Upload"
-import { fetchPhotoIds } from '../../slices/photos.js'
+import { fetchUser } from '../../slices/user.js'
 import { useAuth0 } from "@auth0/auth0-react"
 
 function Gallery() {
   const [flippedIndex, setFlippedIndex] = useState(null)
   const [uploadModalOpen, setUploadModalOpen] = useState(false)
   const [editModalOpen, setEditModalOpen] = useState(false)
-  const [editSRC, setEditSRC] = useState("")
+  const [editPhotoId, setEditPhotoId] = useState("")
   const dispatch = useDispatch()
   const { user } = useAuth0()
 
   useEffect(() => {
-    dispatch(fetchPhotoIds(user.email))
+    dispatch(fetchUser(user.email))
   }, [dispatch])
 
-  const photoIds = useSelector((state) => state.user.photoIds)
+  const photoIds = useSelector((state) => state.user.photos)
 
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
@@ -31,12 +31,12 @@ function Gallery() {
   
   const handleDelete = photoId => {
     fetch(`/users/${user.email}/photos/${photoId}`, { method: 'DELETE' })
-    .then(() => dispatch(fetchPhotoIds(user.email)))
+    .then(() => dispatch(fetchUser(user.email)))
     .catch(console.error)
   }
 
-  const handleEdit = imageURL => {
-    setEditSRC(imageURL);
+  const handleEdit = photoId => {
+    setEditPhotoId(photoId);
     setEditModalOpen(true);
   }
   
@@ -84,7 +84,7 @@ function Gallery() {
       </Modal>
       <Modal open={editModalOpen} onClose={handleSetEditModalClose}>
         <div className="modal">
-          <EditModal imageSrc={editSRC} closeModal={handleSetEditModalClose} />
+          <EditModal photoId={editPhotoId} closeModal={handleSetEditModalClose} />
         </div>
       </Modal>
     </>

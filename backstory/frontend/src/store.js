@@ -1,8 +1,8 @@
 import { collectionsReducer } from './reducers/collections';
 import { configureStore } from '@reduxjs/toolkit';
 import { photosReducer } from './reducers/photos';
-import userReducer from './slices/photos'
 import thunk from 'redux-thunk';
+import userReducer from './slices/user'
 
 const reducer = {
   photos: photosReducer,

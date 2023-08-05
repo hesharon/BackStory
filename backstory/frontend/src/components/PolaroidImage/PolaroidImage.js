@@ -12,7 +12,7 @@ const PolaroidImage = ({ id, imageURL, caption, isFlipped, onFlip, deletePhoto, 
         </div>
         <div className="polaroid-back" onClick={onFlip}>
           <div className="caption">{caption}</div>
-          <button onClick={() => editPhoto(imageURL)}>Edit</button>
+          <button onClick={() => editPhoto(id)}>Edit</button>
         </div>
       </div>
     </div>
