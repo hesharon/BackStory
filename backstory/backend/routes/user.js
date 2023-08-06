@@ -115,11 +115,11 @@ router.put('/:email/photos/:photoId', async (req, res) => {
   try {
     const user = await User.findOne({ email })
     if (!user) {
-      throw new Error('User not found')
+      return res.status(404).json({ error: 'User not found' })
     }
     const photoToUpdate = user.photos.find((photo) => photo._id.toString() === photoId)
     if (!photoToUpdate) {
-      throw new Error('Photo not found');
+      return res.status(404).json({ error: 'Photo not found' })
     }
 
     photoToUpdate.caption = caption
