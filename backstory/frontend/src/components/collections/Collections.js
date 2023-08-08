@@ -1,30 +1,35 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Collections.module.css";
-import Collection from "../collection/Collection";
-import AddCard from "../upload/AddCard";
-import New from "../collections/New";
-import Modal from "@mui/material/Modal";
-import { useAuth0 } from "@auth0/auth0-react";
-import CollectionView from "../collectionView/CollectionView";
+import React, { useState, useEffect } from 'react';
+import styles from './Collections.module.css';
+import Collection from '../collection/Collection';
+import AddCard from '../upload/AddCard';
+import New from '../collections/New';
+import Modal from '@mui/material/Modal';
+import { useAuth0 } from '@auth0/auth0-react';
+import CollectionView from '../CollectionView/CollectionView';
 
 function Collections() {
   const [collections, setCollections] = useState([]);
   const [showCollections, setShowCollections] = useState(true);
   const [images, setImages] = useState([]);
   const [newCollectionModalOpen, setNewCollectionModalOpen] = useState(false);
-  const [collectionId, setCollectionId] = useState(null)
+  const [collectionId, setCollectionId] = useState(null);
   const { user } = useAuth0();
 
+  const BACKEND_URL =
+    process.env.NODE_ENV === 'production'
+      ? 'https://backstory-backend.onrender.com'
+      : 'http://localhost:8000';
+
   useEffect(() => {
-    fetch(`/users/${user.email}/collections`, {
-      method: "GET",
+    fetch(`${BACKEND_URL}/users/${user.email}/collections`, {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
-    .then(response => response.json())
-    .then(data => setCollections(data))
-    .catch(console.error);
+      .then((response) => response.json())
+      .then((data) => setCollections(data))
+      .catch(console.error);
   }, []);
 
   const handleNewCollectionUploadModalOpen = () => {
@@ -51,7 +56,7 @@ function Collections() {
                 onSelect={() => {
                   setShowCollections(false);
                   setImages(collection.photos);
-                  setCollectionId(collection._id)
+                  setCollectionId(collection._id);
                 }}
               />
             ))}

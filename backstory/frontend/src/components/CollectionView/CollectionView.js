@@ -1,14 +1,14 @@
-import "./CollectionView.css";
+import './CollectionView.css';
 
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import AddCard from "../upload/AddCard";
-import Modal from "@mui/material/Modal";
-import Upload from "../upload/Upload";
-import { useAuth0 } from "@auth0/auth0-react";
-import PhotoSelector from "../photoSelector/photoSelector";
-import BasicPolaroidImage from "../BasicPolaroidImage/BasicPolaroidImage";
+import AddCard from '../upload/AddCard';
+import Modal from '@mui/material/Modal';
+import Upload from '../upload/Upload';
+import { useAuth0 } from '@auth0/auth0-react';
+import PhotoSelector from '../photoSelector/photoSelector';
+import BasicPolaroidImage from '../BasicPolaroidImage/BasicPolaroidImage';
 
 function CollectionView({ images, collectionId }) {
   const [flippedIndex, setFlippedIndex] = useState(null);
@@ -17,13 +17,21 @@ function CollectionView({ images, collectionId }) {
   const [photos, setPhotos] = useState([]);
   const { user } = useAuth0();
 
+  const BACKEND_URL =
+    process.env.NODE_ENV === 'production'
+      ? 'https://backstory-backend.onrender.com'
+      : 'http://localhost:8000';
+
   useEffect(() => {
-    fetch(`/users/${user.email}/collections/${collectionId}/photos`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `${BACKEND_URL}/users/${user.email}/collections/${collectionId}/photos`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
       .then((res) => res.json())
       .then((photos) => setPhotos(photos))
       .catch(console.error);
@@ -44,10 +52,10 @@ function CollectionView({ images, collectionId }) {
       (id) => id !== null && id !== undefined
     );
 
-    fetch(`/users/${userEmail}/collections/${collectionId}`, {
-      method: "PUT",
+    fetch(`${BACKEND_URL}/users/${userEmail}/collections/${collectionId}`, {
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ photos: filteredPhotoIds }),
     })
@@ -55,14 +63,14 @@ function CollectionView({ images, collectionId }) {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("Error: " + response.statusText);
+          throw new Error('Error: ' + response.statusText);
         }
       })
       .then((data) => {
-        console.log("Collection updated: ", data);
+        console.log('Collection updated: ', data);
       })
       .catch((error) => {
-        console.log("Error: ", error);
+        console.log('Error: ', error);
       });
   };
 
@@ -90,7 +98,7 @@ function CollectionView({ images, collectionId }) {
                     key={index}
                     isFlipped={flippedIndex === index}
                     onFlip={() => handleFlip(index)}
-                    imageURL={`/photos/${photo.photoId}/image`}
+                    imageURL={`${BACKEND_URL}/photos/${photo.photoId}/image`}
                     caption={photo.caption}
                   />
                 ))}
@@ -99,7 +107,7 @@ function CollectionView({ images, collectionId }) {
           <Modal open={uploadModalOpen} onClose={handleSetUploadModalClose}>
             <div className="modal">
               <Upload
-                imageSrc={"https://cdn.wallpapersafari.com/50/4/wa7o0g.png"}
+                imageSrc={'https://cdn.wallpapersafari.com/50/4/wa7o0g.png'}
                 closeModal={handleSetUploadModalClose}
               />
             </div>
