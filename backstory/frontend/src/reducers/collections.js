@@ -27,16 +27,23 @@ const initialState =
 
 export const collectionsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "CREATE_COLLECTION":
-            return [...state, action.payload]
-        case "DELETE_COLLECTION":
-            // TODO
-            // return [...state.slice(0, parseInt(action.payload)), ...state.slice(parseInt(action.payload) + 1)]
-            break;
-        case "ADD_TO_COLLECTION":
-            // TODO
-            break;
-        default:
-            return state
+      case "ADD_COLLECTION":
+        return [...state, action.payload]
+      case "DELETE_COLLECTION":
+        const index = state.findIndex(item => item._id === action.payload.collectionId);
+        return [...state.slice(0, index), ...state.slice(index + 1)]
+      case "UPDATE_COLLECTION":
+        return state.map(item => {
+          if (item._id === action.payload.collectionId) {
+            return {
+              ...item,
+              photos: action.payload.photos, // Assume the payload includes the new set of photos
+            };
+          }
+          return item;
+        });
+      default:
+        return state
     }
-}
+  }
+  

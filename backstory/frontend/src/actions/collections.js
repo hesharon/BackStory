@@ -1,14 +1,14 @@
-export const createCollection = collection => ({
-    type: "CREATE_COLLECTION",
-    payload: collection
-})
+export const addCollection = (collection) => ({
+  type: "ADD_COLLECTION",
+  payload: collection,
+});
 
-export const deleteCollection = collectionId => ({
-    type: "DELETE_COLLECTION",
-    payload: collectionId
-})
+export const updateCollection = (collection) => ({
+  type: "UPDATE_COLLECTION",
+  payload: collection,
+});
 
-export const addToCollection = (photo , collectionId) => ({
-    type: "ADD_TO_COLLECTION",
-    payload: {collectionId, photo}
-})
+export const deleteCollection = (collectionId) => ({
+  type: "DELETE_COLLECTION",
+  payload: collectionId,
+});

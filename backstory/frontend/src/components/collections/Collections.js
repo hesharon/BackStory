@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Collections.module.css";
 import Collection from "../collection/Collection";
 import { useSelector } from "react-redux";
@@ -6,12 +6,28 @@ import Gallery from "../gallery/Gallery";
 import AddCard from "../upload/AddCard";
 import New from "../collections/New";
 import Modal from "@mui/material/Modal";
+import { useAuth0 } from "@auth0/auth0-react";
+import CollectionView from "../collection/CollectionView";
 
 function Collections() {
-  const collections = useSelector((state) => state.collections);
+  const [collections, setCollections] = useState([]);
   const [showCollections, setShowCollections] = useState(true);
   const [images, setImages] = useState([]);
   const [newCollectionModalOpen, setNewCollectionModalOpen] = useState(false);
+  const [collectionId, setCollectionId] = useState(null)
+  const { user } = useAuth0();
+
+  useEffect(() => {
+    fetch(`/users/${user.email}/collections`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(response => response.json())
+    .then(data => setCollections(data))
+    .catch(console.error);
+  }, []);
 
   const handleNewCollectionUploadModalOpen = () => {
     setNewCollectionModalOpen(true);
@@ -20,6 +36,8 @@ function Collections() {
   const handleNewCollectionModalClose = () => {
     setNewCollectionModalOpen(false);
   };
+
+  console.log('collections', collections)
 
   return (
     <>
@@ -32,25 +50,26 @@ function Collections() {
             {collections.map((collection, index) => (
               <Collection
                 key={index}
-                name={collection.name}
-                images={collection.images}
+                name={collection.title}
+                images={collection.photos}
                 onSelect={() => {
                   setShowCollections(false);
-                  setImages(collection.images);
+                  setImages(collection.photos);
+                  setCollectionId(collection._id)
                 }}
               />
             ))}
           </div>
         </div>
       ) : (
-        <Gallery photos={images} />
+        <CollectionView images={images} collectionId={collectionId} />
       )}
       <Modal
         open={newCollectionModalOpen}
         onClose={handleNewCollectionModalClose}
       >
         <div className={styles.modal}>
-          <New />
+          <New closeModal={handleNewCollectionModalClose} />
         </div>
       </Modal>
     </>
