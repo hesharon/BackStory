@@ -1,9 +1,8 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const router = express.Router();
 const multer = require("multer");
 const { storage } = require("../db/middleware");
-const { User, Photo } = require("../schema");
+const { User } = require("../schema");
 
 const upload = multer({ storage });
 

@@ -8,8 +8,6 @@ const BasicPolaroidImage = ({
   caption,
   isFlipped,
   onFlip,
-  deletePhoto,
-  editPhoto,
 }) => {
   return (
     <div className={`polaroid ${isFlipped ? "flipped" : ""}`}>

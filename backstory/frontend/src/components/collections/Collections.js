@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Collections.module.css";
 import Collection from "../collection/Collection";
-import { useSelector } from "react-redux";
-import Gallery from "../gallery/Gallery";
 import AddCard from "../upload/AddCard";
 import New from "../collections/New";
 import Modal from "@mui/material/Modal";
