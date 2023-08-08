@@ -204,24 +204,13 @@ router.get("/:email/collections/:collectionId/photos", async (req, res) => {
     const collectionPhotoIds = collection.photos.map((photo) =>
       photo.toString()
     );
-    console.log("collectionPhotoIds", collectionPhotoIds);
 
     // Filter the user's photos to only include those with IDs matching the collectionPhotoIds
     const photosInCollection = user.photos.filter((photo) =>
-      collectionPhotoIds.includes(photo.photoId.toString())
+      collectionPhotoIds.includes(photo._id.toString())
     );
-    console.log("photosInCollection", photosInCollection);
 
-    // Format the output
-    const formattedOutput = photosInCollection.map((photo) => ({
-      photoId: new ObjectId(photo.photoId),
-      caption: photo.caption,
-      _id: new ObjectId(photo._id),
-    }));
-
-    console.log("formattedOutput", formattedOutput);
-
-    res.json(formattedOutput);
+    res.json(photosInCollection);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);

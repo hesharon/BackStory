@@ -51,7 +51,7 @@ function Collections() {
               <Collection
                 key={index}
                 name={collection.title}
-                images={collection.photos}
+                collectionId={collection._id}
                 onSelect={() => {
                   setShowCollections(false);
                   setImages(collection.photos);

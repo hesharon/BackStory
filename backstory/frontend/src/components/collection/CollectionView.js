@@ -10,6 +10,7 @@ import Upload from "../upload/Upload";
 import { fetchPhotoIds } from "../../slices/photos.js";
 import { useAuth0 } from "@auth0/auth0-react";
 import PhotoSelector from "../photoSelector/photoSelector";
+import BasicPolaroidImage from "../PolaroidImage/BasicPolaroidImage";
 
 function CollectionView({ images, collectionId }) {
   const [flippedIndex, setFlippedIndex] = useState(null);
@@ -27,7 +28,8 @@ function CollectionView({ images, collectionId }) {
           "Content-Type": "application/json",
         },
       })
-      .then(data => setPhotos(data))
+      .then(res => res.json())
+      .then(photos => setPhotos(photos))
       .catch(console.error);
   }, [collectionId]);
 
@@ -51,13 +53,15 @@ function CollectionView({ images, collectionId }) {
   const handleSaveCollection = (selectedPhotoIds) => {
     // Replace the following lines with actual user email and collection ID
     const userEmail = user.email;
+    const filteredPhotoIds = selectedPhotoIds.filter(id => id !== null && id !== undefined);
+
 
     fetch(`/users/${userEmail}/collections/${collectionId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ photos: selectedPhotoIds }),
+      body: JSON.stringify({ photos: filteredPhotoIds }),
     })
       .then((response) => {
         if (response.ok) {
@@ -93,9 +97,9 @@ function CollectionView({ images, collectionId }) {
               >
                 <AddCard />
               </div>
-              {/* {photos &&
+              {photos &&
                 photos?.map((photo, index) => (
-                  <PolaroidImage
+                  <BasicPolaroidImage
                     id={photo._id}
                     key={index}
                     isFlipped={flippedIndex === index}
@@ -103,7 +107,7 @@ function CollectionView({ images, collectionId }) {
                     imageURL={`/photos/${photo.photoId}/image`}
                     caption={photo.caption}
                   />
-                ))} */}
+                ))}
             </div>
           </div>
           <Modal open={uploadModalOpen} onClose={handleSetUploadModalClose}>

@@ -47,6 +47,7 @@ function PhotoSelector({ photos, collection, onSave }) {
             />
             <input
               type="checkbox"
+              className="simple-checkbox"
               checked={selectedPhotos.has(photo._id)} // Ensure you are checking the correct attribute
               onChange={() => handlePhotoToggle(photo)}
             />
