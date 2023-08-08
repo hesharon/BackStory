@@ -19,8 +19,6 @@ function Collection({ collectionId, name, onSelect }) {
       .catch(console.error);
   }, [collectionId]);
 
-  console.log("in here", photos);
-
   return (
     <div
       className="collection"

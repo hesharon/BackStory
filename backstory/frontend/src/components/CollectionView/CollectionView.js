@@ -8,7 +8,7 @@ import Modal from "@mui/material/Modal";
 import Upload from "../upload/Upload";
 import { useAuth0 } from "@auth0/auth0-react";
 import PhotoSelector from "../photoSelector/photoSelector";
-import BasicPolaroidImage from "../PolaroidImage/BasicPolaroidImage";
+import BasicPolaroidImage from "../BasicPolaroidImage/BasicPolaroidImage";
 
 function CollectionView({ images, collectionId }) {
   const [flippedIndex, setFlippedIndex] = useState(null);

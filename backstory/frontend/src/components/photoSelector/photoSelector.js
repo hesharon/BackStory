@@ -1,7 +1,7 @@
 import "./photoSelector.css";
 
 import React, { useState, useEffect } from "react";
-import BasicPolaroidImage from "../PolaroidImage/BasicPolaroidImage";
+import BasicPolaroidImage from "../BasicPolaroidImage/BasicPolaroidImage";
 
 function PhotoSelector({ photos, collection, onSave }) {
   const [selectedPhotos, setSelectedPhotos] = useState(new Set(collection));
@@ -10,8 +10,6 @@ function PhotoSelector({ photos, collection, onSave }) {
   const handleFlip = (index) => {
     setFlippedIndex(flippedIndex !== index ? index : null);
   };
-
-  console.log("photos", photos);
 
   useEffect(() => {
     setSelectedPhotos(new Set(collection));
