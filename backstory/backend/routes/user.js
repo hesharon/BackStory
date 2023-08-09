@@ -34,6 +34,30 @@ router.post('/', async (req, res) => {
 })
 
 // @route /users/:email
+// @desc Update user's bio with :email
+router.put('/:email', (req, res) => {
+  const { email } = req.params;
+  const { bio } = req.body;
+
+  User.findOneAndUpdate(
+    { email },
+    { $set: { bio } },
+    { new: true, useFindAndModify: false }
+  )
+    .then(updatedUser => {
+      if (updatedUser) {
+        res.json(updatedUser);
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ error: `Error updating user's bio: ${error}` });
+    });
+});
+
+// @route /users/:email
 // @desc Get user with :email
 router.get('/:email', (req, res) => {
   const { email } = req.params
