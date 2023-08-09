@@ -9,7 +9,7 @@ Backstory is a unique photo collection and sharing app that brings back the sent
 ✅ Can upload a photo & caption
 ✅ Can view profile page & gallery of photos
 ✅ Can view collections
-❌ Pages are responsive
+✅ Pages are responsive
 
 #### Standard Requirements
 ✅ Can create collections
@@ -54,6 +54,6 @@ I worked on the gallery, collection, and upload photo UI components. I also depl
 I worked on some of the frontend components such as the Collections page, and adding buttons to the cards. During the redux phase of the project, I implemented the reducers for the delete and edit functionalities. When our app transitioned to MongoDB, I helped in hooking up the PATCH endpoint to our reducers.
 #### Johnny Liao
 #### Sharon He
-I worked on setting up Auth0, login, and logout, as well as creating an Auth0 action flow connecting to MongoDB. I also implemented the Profile page and custom components such as the navbar, and made changes to our Redux store. In regards to the backend, I implemented endpoints such as adding and updating a photo.
+I worked on setting up Auth0, login, and logout, as well as creating an Auth0 action flow connecting to MongoDB. I also implemented the Profile page and custom components such as the navbar, and made changes to our Redux store. In regards to the backend, I implemented endpoints such as adding and updating a photo. Lastly, I wrote the documentation for the project, but also the documentation on how to run the frontend and backend, which is in the README file in /backstory.
 #### Taher Ankleshwaria
 
