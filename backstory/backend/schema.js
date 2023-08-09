@@ -9,13 +9,19 @@ const photoSchema = new Schema({
   contentType: { type: String, required: true } // Store the content type of the image
 });
 
+// Collection schema
+const collectionSchema = new Schema({
+  title: { type: String, required: true },
+  photos: [{ type: Schema.Types.ObjectId }] // references to Photo IDs in GridFS
+})
+
 // userSchema
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   bio: { type: String },
   friends: [{ type: String }],
-  collections: [{ type: Schema.Types.ObjectId, ref: 'Photo' }],
+  collections: [collectionSchema],
   photos: [{
     photoId: { type: Schema.Types.ObjectId },
     caption: { type: String }
@@ -25,5 +31,6 @@ const userSchema = new Schema({
 // Create models based on the schemas
 const Photo = mongoose.model('Photo', photoSchema);
 const User = mongoose.model('User', userSchema);
+const Collection = mongoose.model('Collection', collectionSchema);
 
-module.exports = { Photo, User };
+module.exports = { Photo, User, Collection };
