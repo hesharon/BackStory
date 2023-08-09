@@ -1,13 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
-.export-container {
-  position: absolute;
-  left: -1000px;
-}
-
 .polaroid {
-  width: 250px;
-  height: 290px;
+  width: 400px;
+  height: 450px;
   perspective: 1000px;
   margin: 20px;
 }
@@ -28,8 +23,7 @@
   transform: rotateY(180deg);
 }
 
-.polaroid-front,
-.polaroid-back {
+.polaroid-front {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -40,33 +34,12 @@
   box-sizing: border-box;
 }
 
-.polaroid-back:hover {
-  cursor: pointer;
-}
-
 .polaroid-front img {
   width: 100%;
   height: 80%;
   object-fit: cover;
   border-radius: 3px;
   cursor: pointer;
-}
-
-.polaroid-back {
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: rotateY(180deg);
-}
-
-.polaroid-button {
-  width: 100px;
-  padding: 3.5%;
-}
-
-.button-container {
-  display: flex;
 }
 
 .caption {
