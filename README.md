@@ -61,3 +61,9 @@ Worked on getting the backend setup with mongoose and connected it with our mong
 I worked on setting up Auth0, login, and logout, as well as creating an Auth0 action flow connecting to MongoDB. I also implemented the Profile page and custom components such as the navbar, and made changes to our Redux store. In regards to the backend, I implemented endpoints such as adding and updating a photo. Lastly, I wrote the documentation for the project, but also the documentation on how to run the frontend and backend, which is in the README file in /backstory.
 #### Taher Ankleshwaria
 I worked on the initial frontend components in the Gallery section of the application; this includes the PolaroidImage component and animation and the rendering of all a user's photos. I also worked on the Collections feature; both the frontend design/functionality as well as the neccessary backend endpoints.
+
+
+## When testing, please use these credentials:
+
+User: TA,
+Password: 455Rocks!
