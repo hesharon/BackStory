@@ -53,6 +53,7 @@ I worked on the gallery, collection, and upload photo UI components. I also depl
 #### Danny Wei
 I worked on some of the frontend components such as the Collections page, and adding buttons to the cards. During the redux phase of the project, I implemented the reducers for the delete and edit functionalities. When our app transitioned to MongoDB, I helped in hooking up the PATCH endpoint to our reducers.
 #### Johnny Liao
+Worked on getting the backend setup with mongoose and connected it with our mongodb database. I also wrote the endpoints to handle the photo uploads and setup gridfs to handle large file types. I worked on the initial setup with reducers to handle fetching data from mongodb and got that setup on the frontend. I also worked on getting editing bio setup, but it isn't a feature that will be merged to our final repo.
 #### Sharon He
 I worked on setting up Auth0, login, and logout, as well as creating an Auth0 action flow connecting to MongoDB. I also implemented the Profile page and custom components such as the navbar, and made changes to our Redux store. In regards to the backend, I implemented endpoints such as adding and updating a photo. Lastly, I wrote the documentation for the project, but also the documentation on how to run the frontend and backend, which is in the README file in /backstory.
 #### Taher Ankleshwaria
