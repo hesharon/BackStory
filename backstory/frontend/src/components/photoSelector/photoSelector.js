@@ -52,7 +52,7 @@ function PhotoSelector({ photos, collection, onSave }) {
           </div>
         ))}
       </div>
-      <button onClick={handleSave}>Save</button>
+      <button className="button" onClick={handleSave}>Save</button>
     </div>
   );  
 }

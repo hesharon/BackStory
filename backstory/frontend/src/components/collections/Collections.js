@@ -5,7 +5,7 @@ import AddCard from '../upload/AddCard';
 import New from '../collections/New';
 import Modal from '@mui/material/Modal';
 import { useAuth0 } from '@auth0/auth0-react';
-import CollectionView from '../CollectionView/CollectionView';
+import CollectionView from '../collectionView/CollectionView';
 
 function Collections() {
   const [collections, setCollections] = useState([]);

@@ -1,5 +1,6 @@
 .wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 20%;
@@ -32,4 +33,8 @@
   border-radius: 4px;
   position: relative;
   margin-left: 1.25rem;
+}
+
+.button {
+  margin-top: 3rem;
 }
