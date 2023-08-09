@@ -51,6 +51,7 @@ We plan to allow users to fully socialize with other users. This includes, likin
 #### Alvin Xu
 I worked on the gallery, collection, and upload photo UI components. I also deployed our application to Render. I also implemented the export to Polaroid functionality.
 #### Danny Wei
+I worked on some of the frontend components such as the Collections page, and adding buttons to the cards. During the redux phase of the project, I implemented the reducers for the delete and edit functionalities. When our app transitioned to MongoDB, I helped in hooking up the PATCH endpoint to our reducers.
 #### Johnny Liao
 #### Sharon He
 I worked on setting up Auth0, login, and logout, as well as creating an Auth0 action flow connecting to MongoDB. I also implemented the Profile page and custom components such as the navbar, and made changes to our Redux store. In regards to the backend, I implemented endpoints such as adding and updating a photo.
