@@ -21,7 +21,7 @@ Backstory is a unique photo collection and sharing app that brings back the sent
 #### Stretch Requirements
 ❌ Can see photos of friends in user's feed
 ❌ Users can collaborate and upload to the same album
-❌ Can export photo to polaroid format
+✅ Can export photo to polaroid format
 
 ## Tech Stack
 #### Unit 1 - HTML, CSS, JS & Unit 2 - React & Redux
@@ -49,7 +49,7 @@ We plan to allow users to fully socialize with other users. This includes, likin
 
 ## Contributions
 #### Alvin Xu
-I worked on the gallery, collection, and upload photo UI components. I also deployed our application to Render.
+I worked on the gallery, collection, and upload photo UI components. I also deployed our application to Render. I also implemented the export to Polaroid functionality.
 #### Danny Wei
 #### Johnny Liao
 #### Sharon He
