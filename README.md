@@ -49,6 +49,7 @@ We plan to allow users to fully socialize with other users. This includes, likin
 
 ## Contributions
 #### Alvin Xu
+I worked on the gallery, collection, and upload photo UI components. I also deployed our application to Render.
 #### Danny Wei
 #### Johnny Liao
 #### Sharon He
