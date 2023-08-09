@@ -1,15 +1,14 @@
+const express = require("express");
+const router = express.Router();
+const multer = require("multer");
+const { storage } = require("../db/middleware");
+const { User } = require("../schema");
 
-const express = require('express')
-const router = express.Router()
-const multer = require('multer')
-const { storage } = require('../db/middleware')
-const { User } = require("../schema")
+const upload = multer({ storage });
 
-const upload = multer({ storage })
-
-// @route POST /users 
+// @route POST /users
 // @desc Initialize a user in the database
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     // Extract the user data from the request body
     const { username } = req.body;
@@ -20,139 +19,151 @@ router.post('/', async (req, res) => {
       bio: "",
       friends: [],
       collections: [],
-      photos: []
+      photos: [],
     });
 
     // Save the user document to the database
     await user.save();
 
-    return res.status(201).json({ message: 'User initialized successfully' });
+    return res.status(201).json({ message: "User initialized successfully" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: `Error iniitalizing user: ${error}` });
   }
-})
+});
 
 // @route /users/:email
-// @desc Update user's bio with :email
-router.put('/:email', (req, res) => {
+// @desc Update user's bio and profileImg with :email
+router.put("/:email", async (req, res) => {
   const { email } = req.params;
-  const { bio } = req.body;
+  const { bio, profileImg } = req.body; // Add profileImg here
+  console.log("hehehe", email, profileImg);
 
-  User.findOneAndUpdate(
-    { email },
-    { $set: { bio } },
-    { new: true, useFindAndModify: false }
-  )
-    .then(updatedUser => {
-      if (updatedUser) {
-        res.json(updatedUser);
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      res.status(500).json({ error: `Error updating user's bio: ${error}` });
-    });
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      { $set: { bio, profileImg } }, // Update both bio and profileImg
+      { new: true, useFindAndModify: false },
+    );
+
+    if (updatedUser) {
+      res.json(updatedUser);
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: `Error updating user: ${error}` });
+  }
 });
 
 // @route /users/:email
 // @desc Get user with :email
-router.get('/:email', (req, res) => {
-  const { email } = req.params
+router.get("/:email", (req, res) => {
+  const { email } = req.params;
 
   User.findOne({ email })
-    .then(user => user ? res.json(user) : res.status(404).json({ error: 'User not found' }))
-    .catch(error => {
-      console.error(error)
-      res.status(500).json({ error: `Error getting user: ${error}` })
-    })
-  }
-)
+    .then((user) =>
+      user ? res.json(user) : res.status(404).json({ error: "User not found" })
+    )
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error: `Error getting user: ${error}` });
+    });
+});
 
 // @route /users/:email/photos
 // @desc Get all photos of user that matches email
-router.get('/:email/photos', (req, res) => {
-  const { email } = req.params
+router.get("/:email/photos", (req, res) => {
+  const { email } = req.params;
 
   // Find the user document
   User.findOne({ email })
-    .populate('photos') // Populate the 'photos' field with actual images
+    .populate("photos") // Populate the 'photos' field with actual images
     .exec()
-    .then(user => user ? res.json(user.photos) : res.status(404).json({ error: 'User not found' }))
-    .catch(error => {
-      console.error(error)
-      res.status(500).json({ error: `Error getting photos: ${error}` })
-    })
-})
+    .then((user) =>
+      user
+        ? res.json(user.photos)
+        : res.status(404).json({ error: "User not found" })
+    )
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error: `Error getting photos: ${error}` });
+    });
+});
 
 // @route /users/:email/photos/:id
 // @desc Delete photo with :id of user with :email
-router.delete('/:email/photos/:id', async (req, res) => {
-  const photoId = req.params.id
-  const email = req.params.email
+router.delete("/:email/photos/:id", async (req, res) => {
+  const photoId = req.params.id;
+  const email = req.params.email;
 
   try {
-    const user = await User.findOne({ email })
-    
-    const photoIndex = user.photos.findIndex(photo => photo._id.toString() === photoId)
-    
-    if (photoIndex === -1) {
-      return res.status(404).send('Photo not found')
-    }
-    user.photos.splice(photoIndex, 1)
-    await user.save()
+    const user = await User.findOne({ email });
 
-    res.send('Photo deleted successfully')
+    const photoIndex = user.photos.findIndex((photo) =>
+      photo._id.toString() === photoId
+    );
+
+    if (photoIndex === -1) {
+      return res.status(404).send("Photo not found");
+    }
+    user.photos.splice(photoIndex, 1);
+    await user.save();
+
+    res.send("Photo deleted successfully");
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: `Error deleting photo: ${error}` })
+    console.error(err);
+    res.status(500).json({ error: `Error deleting photo: ${error}` });
   }
-})
+});
 
 // @route /users/:email/photos
 // @desc Upload photo to user with :email
-router.post('/:email/photos', upload.single('file'), async (req, res) => {
-  const { caption } = req.body
-  const { email } = req.params
-  const id = req.file.id
+router.post("/:email/photos", upload.single("file"), async (req, res) => {
+  const { caption } = req.body;
+  const { email } = req.params;
+  const id = req.file.id;
 
   try {
-    const updatedUser = await User.findOneAndUpdate({ email }, { $push: { photos: { photoId: id, caption } } }, { new: true })
+    const updatedUser = await User.findOneAndUpdate({ email }, {
+      $push: { photos: { photoId: id, caption } },
+    }, { new: true });
     if (!updatedUser) {
-      return res.status(404).json({ error: 'User not found' })
+      return res.status(404).json({ error: "User not found" });
     }
-    res.json(updatedUser.photos)
+    res.json(updatedUser.photos);
   } catch (err) {
-      console.error(error)
-      res.status(500).json({ error: `Error uploading photo: ${error}` })
+    console.error(error);
+    res.status(500).json({ error: `Error uploading photo: ${error}` });
   }
-})
+});
 
 // @route /users/:email/photos/:photoId
 // @desc Update user's photo's caption
-router.put('/:email/photos/:photoId', async (req, res) => {
-  const { caption } = req.body
-  const { email, photoId } = req.params
+router.put("/:email/photos/:photoId", async (req, res) => {
+  const { caption } = req.body;
+  const { email, photoId } = req.params;
 
   try {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ error: 'User not found' })
+      return res.status(404).json({ error: "User not found" });
     }
-    const photoToUpdate = user.photos.find((photo) => photo._id.toString() === photoId)
+    const photoToUpdate = user.photos.find((photo) =>
+      photo._id.toString() === photoId
+    );
     if (!photoToUpdate) {
-      return res.status(404).json({ error: 'Photo not found' })
+      return res.status(404).json({ error: "Photo not found" });
     }
 
-    photoToUpdate.caption = caption
-    const newUser = await user.save()
-    res.json(newUser)
+    photoToUpdate.caption = caption;
+    const newUser = await user.save();
+    res.json(newUser);
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: `Error updating photo caption: ${error}` })
+    console.error(error);
+    res.status(500).json({ error: `Error updating photo caption: ${error}` });
   }
-})
+});
 
-module.exports = router
+module.exports = router;

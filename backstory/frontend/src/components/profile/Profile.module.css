@@ -13,3 +13,10 @@
     color: #727272;
     margin: 1rem;
 }
+
+.uploadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}

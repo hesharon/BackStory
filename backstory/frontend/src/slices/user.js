@@ -15,9 +15,10 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async (email) => {
 // Async thunk for updating user bio
 export const updateUserBio = createAsyncThunk(
   "user/updateUserBio",
-  async ({email, newBio}) => {
+  async ({ email, newBio, profileImg }) => {
     const response = await axios.put(`${BACKEND_URL}/users/${email}`, {
       bio: newBio,
+      profileImg: profileImg,
     });
     const data = await response.data;
     return data;
