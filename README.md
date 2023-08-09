@@ -44,6 +44,9 @@ The application is fully responsive across all screen sizes. It is optimized for
 #### Accessibility
 The application has been ran through Accessbility Insights for Web's assessment and no major accessbility problems were detected.
 
+#### Redux and Slices
+We made all of our API calls asynchronous using redux thunk and slices. This greatly improves the perfromance and responsiveness of our app. By handling API calls asynchronously we've decoupled these operations from our main UI thread. With slices, we've modularized our reducer logic, making it more organized and maintainable.
+
 ## Next Steps
 We plan to allow users to fully socialize with other users. This includes, liking and commenting on other people's photos, and allowing users to collaborate on collections. Implementing a search functionality will also allow users to easily find specific photos or collections based on keywords or tags. Finally, some user's may want to keep some of their photos private, so having a feature to allow users to toggle the privacy of a photo can ensure users are comfortable with uploading their photos to the application.
 
