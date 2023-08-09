@@ -72,6 +72,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUserBio.fulfilled, (state, action) => {
         state.bio = action.payload.bio;
+        state.profileImg=action.payload.profileImg;
       });
   },
 });
