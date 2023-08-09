@@ -31,6 +31,10 @@
   text-align: center;
 }
 
+.back-to-collections {
+  margin-left: 5%;
+}
+
 @media (max-width: 580px) {
   .grid {
     grid-template-columns: repeat(1, 1fr);

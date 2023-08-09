@@ -5,7 +5,7 @@ import AddCard from '../upload/AddCard';
 import New from '../collections/New';
 import Modal from '@mui/material/Modal';
 import { useAuth0 } from '@auth0/auth0-react';
-import CollectionView from '../collectionView/CollectionView';
+import CollectionView from '../CollectionView/CollectionView';
 
 function Collections() {
   const [collections, setCollections] = useState([]);
@@ -63,7 +63,15 @@ function Collections() {
           </div>
         </div>
       ) : (
-        <CollectionView images={images} collectionId={collectionId} />
+        <>
+          <button
+            className={styles['back-to-collections']}
+            onClick={() => setShowCollections(true)}
+          >
+            Back to collections
+          </button>
+          <CollectionView images={images} collectionId={collectionId} />
+        </>
       )}
       <Modal
         open={newCollectionModalOpen}
